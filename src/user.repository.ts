@@ -4,4 +4,8 @@ export default class UserRepository {
     this.users.push(user);
     console.log(this.users);
   }
+
+  async findAll() {
+    return this.users;
+  }
 }

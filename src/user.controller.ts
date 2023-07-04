@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import UserRepository from './user.repository';
 
 @Controller('/users')
@@ -9,5 +9,10 @@ export default class UserController {
   async create(@Body() user: any) {
     this.userRepository.save(user);
     return user;
+  }
+
+  @Get()
+  async findAll() {
+    return this.userRepository.findAll();
   }
 }
