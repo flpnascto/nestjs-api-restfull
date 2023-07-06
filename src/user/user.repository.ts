@@ -10,4 +10,8 @@ export default class UserRepository {
   async findAll() {
     return this.users;
   }
+
+  async checkUserEmail(email: string) {
+    return this.users.some((user) => user.email === email);
+  }
 }
