@@ -1,6 +1,8 @@
 import {
+  ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface,
+  registerDecorator,
 } from 'class-validator';
 import UserRepository from '../user.repository';
 import { Injectable } from '@nestjs/common';
@@ -17,3 +19,15 @@ export default class UniqueEmailValidator
     return !emailExists;
   }
 }
+
+export const UniqueEmail = (validationOptions: ValidationOptions) => {
+  return (object: object, property: string) => {
+    registerDecorator({
+      target: object.constructor,
+      propertyName: property,
+      options: validationOptions,
+      constraints: [],
+      validator: UniqueEmailValidator,
+    });
+  };
+};
