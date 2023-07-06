@@ -3,6 +3,7 @@ import UserRepository from './user.repository';
 import { UserCreateDTO } from './dto/UserCreate.dto';
 import { UserEntity } from './user.entity';
 import { v4 as uuid } from 'uuid';
+import UserListDTO from './dto/UserList.dto';
 
 @Controller('/users')
 export default class UserController {
@@ -18,13 +19,15 @@ export default class UserController {
 
     this.userRepository.save(userEntity);
     return {
-      id: userEntity.id,
+      user: new UserListDTO(userEntity.id, userEntity.name),
       message: 'User created successfully',
     };
   }
 
   @Get()
   async findAll() {
-    return this.userRepository.findAll();
+    const users = await this.userRepository.findAll();
+    const userList = users.map((user) => new UserListDTO(user.id, user.name));
+    return userList;
   }
 }
