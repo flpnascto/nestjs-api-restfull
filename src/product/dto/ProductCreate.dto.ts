@@ -1,12 +1,11 @@
 import { Type } from 'class-transformer';
 import {
   IsArray,
-  IsDecimal,
   IsInt,
-  IsNotEmpty,
   IsNumber,
   IsPositive,
   IsString,
+  IsUUID,
   IsUrl,
   Min,
   MinLength,
@@ -58,4 +57,7 @@ export class ProductCreateDTO {
 
   @IsString({ message: 'A categoria precisa ser um texto' })
   category: string;
+
+  @IsUUID(undefined, { message: 'O ID do usuário precisa ser um UUID válido' })
+  userId: string;
 }
