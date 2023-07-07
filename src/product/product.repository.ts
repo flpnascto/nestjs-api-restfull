@@ -3,7 +3,7 @@ import ProductEntity from './product.entity';
 
 @Injectable()
 export default class ProductRepository {
-  private products = [];
+  private products: ProductEntity[] = [];
   async save(product: ProductEntity) {
     this.products.push(product);
   }
