@@ -12,22 +12,34 @@ export default class UserRepository {
     return this.users;
   }
 
+  private async findById(id: string) {
+    const user = await this.users.find((user) => user.id === id);
+    if (!user) {
+      throw new Error('Usuário não existe');
+    }
+    return user;
+  }
+
   async checkUserEmail(email: string) {
     return this.users.some((user) => user.email === email);
   }
 
   async update(id: string, userUpdate: Partial<UserEntity>) {
-    const selectUser = this.users.find((user) => user.id === id);
-
-    if (!selectUser) {
-      throw new Error('Usuário não existe');
-    }
+    const user = await this.findById(id);
 
     Object.entries(userUpdate).forEach(([key, value]) => {
       if (key === 'id') return;
-      selectUser[key] = value;
+      user[key] = value;
     });
 
-    return selectUser;
+    return user;
+  }
+
+  async delete(id: string) {
+    const user = await this.findById(id);
+
+    this.users = this.users.filter((user) => user.id !== id);
+
+    return user;
   }
 }
